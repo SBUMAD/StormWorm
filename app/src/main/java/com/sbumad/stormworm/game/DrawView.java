@@ -25,9 +25,7 @@ public class DrawView extends View {
     @Override
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
-        Paint p = new Paint();
-        p.setColor(Color.RED);
-        canvas.drawRect(0,0,100,100,p);
+        MainActivity.getMain().getSpriteManager().update(canvas);
         this.invalidate();
     }
 }

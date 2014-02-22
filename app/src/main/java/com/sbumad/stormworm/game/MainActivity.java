@@ -1,22 +1,62 @@
 package com.sbumad.stormworm.game;
 
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.sbumad.stormworm.R;
+import com.sbumad.stormworm.sprite.SpriteManager;
+
+
 
 public class MainActivity extends ActionBarActivity {
+
+    public static MainActivity main;
+    private SpriteManager spriteManager;
+    private static int screenWidth;
+    private static int screenHeight;
+
+
+    public SpriteManager getSpriteManager(){return spriteManager;}
+    public static MainActivity getMain(){
+        return main;
+    }
+
+    public static int getScreenWidth(){return screenWidth;}
+    public static int getScreenHeight(){return screenHeight;}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // set the singleton
+        main = this;
+        // Find screen size
+        Point size = new Point();
+        WindowManager w = getWindowManager();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2){
+            w.getDefaultDisplay().getSize(size);
+            screenWidth = size.x;
+            screenHeight = size.y;
+        }else{
+            Display d = w.getDefaultDisplay();
+            screenWidth = d.getWidth();
+            screenHeight = d.getHeight();
+        }
+        // Make a new Screen
         DrawView screen = new DrawView(this);
+        // create the sprite manager
+        spriteManager = new SpriteManager(BitmapFactory.decodeResource(getResources(), R.drawable.background), 0, 200);
+        // set the screen as the current display
         setContentView(screen);
 
 
