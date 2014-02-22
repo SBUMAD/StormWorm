@@ -33,7 +33,7 @@ public class SpriteManager {
     public void initSpriteType(String id, Bitmap image, int states, float statesPerSecond){
         spriteTypes.put(id, new SpriteType(id, image, states, statesPerSecond));
     }
-    public void update(Canvas canvas){
-        canvas.drawBitmap(background, 0, 0, p);
+    public void update(Canvas canvas, float transX, float transY){
+        canvas.drawBitmap(background, transX, transY, p);
     }
 }

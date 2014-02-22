@@ -3,10 +3,12 @@ package com.sbumad.stormworm.game;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Build;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +27,8 @@ public class MainActivity extends ActionBarActivity {
     private SpriteManager spriteManager;
     private static int screenWidth;
     private static int screenHeight;
-
+    private GestureDetectorCompat gestureDetector;
+    private float currentScale;
 
     public SpriteManager getSpriteManager(){return spriteManager;}
     public static MainActivity getMain(){
@@ -55,9 +58,12 @@ public class MainActivity extends ActionBarActivity {
         // Make a new Screen
         DrawView screen = new DrawView(this);
         // create the sprite manager
-        spriteManager = new SpriteManager(BitmapFactory.decodeResource(getResources(), R.drawable.background), 0, 200);
+        spriteManager = new SpriteManager(BitmapFactory.decodeResource(getResources(), R.drawable.background), 0, 50);
         // set the screen as the current display
         setContentView(screen);
+
+        // set up the gesture detector
+        currentScale = 1.0f;
 
 
     }
