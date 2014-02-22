@@ -22,10 +22,10 @@ public class SpriteManager {
     public SpriteManager(Bitmap background, int widthPercent, int heightPercent){
         this.background = background;
         if (widthPercent == 0){
-            widthPercent = (int)(((float)background.getWidth() / (float)background.getHeight()) * (1920.0f / 1080.0f) * heightPercent + .5f);
+            widthPercent = (int)(((float)background.getWidth() / (float)background.getHeight()) * (1080.0f / 1920.0f) * heightPercent + .5f);
         }
         if (heightPercent == 0){
-            heightPercent = (int)(((float)background.getHeight() / (float)background.getWidth()) * (1080.0f / 1920.0f) * widthPercent + .5f);
+            heightPercent = (int)(((float)background.getHeight() / (float)background.getWidth()) * (1920.0f / 1080.0f) * widthPercent + .5f);
         }
         this.background = Bitmap.createScaledBitmap(background, (int)((float)MainActivity.getScreenWidth() * ((float)widthPercent / 100.0f)), (int)((float)MainActivity.getScreenHeight() * ((float)heightPercent / 100.0f)), true);
         p = new Paint();

@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.sbumad.stormworm.R;
@@ -41,6 +42,10 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // remove title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // set the singleton
         main = this;
         // Find screen size
@@ -58,16 +63,18 @@ public class MainActivity extends ActionBarActivity {
         // Make a new Screen
         DrawView screen = new DrawView(this);
         // create the sprite manager
-        spriteManager = new SpriteManager(BitmapFactory.decodeResource(getResources(), R.drawable.background), 0, 50);
+        spriteManager = new SpriteManager(BitmapFactory.decodeResource(getResources(), R.drawable.background),100, 100);
         // set the screen as the current display
         setContentView(screen);
 
-        // set up the gesture detector
-        currentScale = 1.0f;
+        // Set up the sprites
+        initSprites();
 
 
     }
+    private void initSprites(){
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
