@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.sbumad.stormworm.game.DataModel;
 import com.sbumad.stormworm.game.MainActivity;
 
 import java.util.ArrayList;
@@ -13,14 +14,16 @@ import java.util.HashMap;
  * Created by John on 2/22/14.
  */
 public class SpriteManager {
-    HashMap<String, SpriteType> spriteTypes;
-    ArrayList<Sprite> sprites;
-    Bitmap background;
-    Paint p;
+    private HashMap<String, SpriteType> spriteTypes;
+    private ArrayList<Sprite> sprites;
+    private ArrayList<Sprite> toRemove;
+    private Bitmap background;
+    private Paint p;
 
     // leave a dimension 0 to maintain aspect ratio on a galaxy s4
     public SpriteManager(Bitmap background, int widthPercent, int heightPercent){
         this.background = background;
+        toRemove = new ArrayList<Sprite>();
         if (widthPercent == 0){
             widthPercent = (int)(((float)background.getWidth() / (float)background.getHeight()) * (1080.0f / 1920.0f) * heightPercent + .5f);
         }
@@ -30,10 +33,21 @@ public class SpriteManager {
         this.background = Bitmap.createScaledBitmap(background, (int)((float)MainActivity.getScreenWidth() * ((float)widthPercent / 100.0f)), (int)((float)MainActivity.getScreenHeight() * ((float)heightPercent / 100.0f)), true);
         p = new Paint();
     }
-    public void initSpriteType(String id, Bitmap image, int states, float statesPerSecond){
-        spriteTypes.put(id, new SpriteType(id, image, states, statesPerSecond));
+    // leave a dimension 0 to maintain aspect ratio on a galaxy s4
+    public void initSpriteType(String id, Bitmap image, float widthPercent, float heightPercent){
+        spriteTypes.put(id, new SpriteType(id, image, widthPercent, heightPercent));
     }
-    public void update(Canvas canvas, float transX, float transY){
-        canvas.drawBitmap(background, transX, transY, p);
+    public void update(Canvas canvas){
+        canvas.drawBitmap(background, DataModel.getDataModel().getTransX(), DataModel.getDataModel().getTransY(), p);
+
+        for (Sprite s : sprites){
+            if (s.update()){
+                toRemove.add(s);
+            }
+            s.drawSelf(canvas);
+        }
+        for (Sprite s : toRemove){
+            sprites.remove(s);
+        }
     }
 }

@@ -24,8 +24,6 @@ public class DrawView extends View {
     // for moving the map
     float lastX;
     float lastY;
-    float transX;
-    float transY;
 
     public DrawView(Context context) {
         super(context);
@@ -47,7 +45,7 @@ public class DrawView extends View {
         canvas.scale(mScaleFactor, mScaleFactor);
 
         // Update the sprite manager
-        MainActivity.getMain().getSpriteManager().update(canvas, transX, transY);
+        MainActivity.getMain().getSpriteManager().update(canvas);
 
         // Restore scaling
         canvas.restore();
@@ -66,8 +64,8 @@ public class DrawView extends View {
         } else if (ev.getAction() == MotionEvent.ACTION_MOVE){
             float newX = ev.getX();
             float newY = ev.getY();
-            transX += (newX - lastX);
-            transY += (newY - lastY);
+            DataModel.getDataModel().setTransX(DataModel.getDataModel().getTransX() + (newX - lastX));
+            DataModel.getDataModel().setTransY(DataModel.getDataModel().getTransY() + (newY - lastY));
             lastX = newX;
             lastY = newY;
         }
