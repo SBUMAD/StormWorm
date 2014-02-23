@@ -19,6 +19,10 @@ public class Sprite {
     private boolean movingToPoint;
     private float dx;
     private float dy;
+    private float dv;
+
+    long timePassed;
+    long oldTime;
 
     private static Paint p = new Paint();
 
@@ -33,18 +37,29 @@ public class Sprite {
         this.vx = DataModel.toAbsoluteWidth(vx);
         this.vy = DataModel.toAbsoluteHeight(vy);
         movingToPoint = false;
+        timePassed = 0;
+        oldTime = System.currentTimeMillis();
     }
     // this returns true if the sprite is off the game board
     public boolean update(){
-        if (movingToPoint == true && ((x <= dx && x+vx >= dx) || (x >= dx && x+vx <= dx))){
-            x = dx;
-            y = dy;
-            vx = 0;
-            vy = 0;
-            movingToPoint = false;
+        if (timePassed == 0){
+            timePassed = 1;
+        } else {
+            timePassed = System.currentTimeMillis() - oldTime;
         }
-        x += vx;
-        y += vy;
+        if (movingToPoint == true){
+            float hypot = (float)Math.sqrt(Math.pow((dx - x)*100.0f / (float)DataModel.getScreenWidth(), 2.0) + Math.pow((dy - y)*100.0f / (float)DataModel.getScreenHeight(), 2.0));
+            float time = hypot / dv;
+            if (time < timePassed/1000.0f){
+                time = timePassed;
+            }
+            vx = (dx - x)  / time;
+            vy = (dy - y) / time;
+        }
+        x += vx * ((float)timePassed/1000.0f);
+        y += vy * ((float)timePassed/1000.0f);
+
+        oldTime = System.currentTimeMillis();
 
         return DataModel.getDataModel().isOffBackground(this);
     }
@@ -60,11 +75,9 @@ public class Sprite {
         }
     }
     public void moveToPoint(float dx, float dy){
-        float totalTime = 300;
-        vx = (dx - x) / totalTime;
-        vy = (dy - y) / totalTime;
+        movingToPoint = true;
         this.dx = dx;
         this.dy = dy;
-        movingToPoint = true;
+        dv = 30;
     }
 }
