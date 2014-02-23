@@ -1,6 +1,7 @@
 package com.sbumad.stormworm.sprite;
 
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 
 import com.sbumad.stormworm.game.DataModel;
@@ -72,7 +73,18 @@ public class Sprite {
             x -= getSpriteType().getWidth()/2.8;
             y -= getSpriteType().getHeight()/1.7;
         }
-        canvas.drawBitmap(spriteType.getImage(), DataModel.getDataModel().getTransX() + x, DataModel.getDataModel().getTransY() + y, p);
+        if (this instanceof Player && getSpriteType().getId().startsWith("bot")){
+            if (((Player)this).getCurrentRotation() != 0.0f){
+                Matrix rotationMatrix = new Matrix();
+                rotationMatrix.postRotate((float)Math.PI/2.0f);
+                rotationMatrix.postTranslate(DataModel.getDataModel().getTransX()+x, DataModel.getDataModel().getTransY() + y);
+                canvas.drawBitmap(spriteType.getImage(), rotationMatrix, p);
+                rotationMatrix.postTranslate(-1.0f * (DataModel.getDataModel().getTransX()+x), -1.0f * (DataModel.getDataModel().getTransY() + y));
+
+            }
+        } else {
+            canvas.drawBitmap(spriteType.getImage(), DataModel.getDataModel().getTransX() + x, DataModel.getDataModel().getTransY() + y, p);
+        }
         if (getSpriteType().getId().startsWith("player") || getSpriteType().getId().startsWith("bot")){
             x += getSpriteType().getWidth()/2.8;
             y += getSpriteType().getHeight()/1.7;

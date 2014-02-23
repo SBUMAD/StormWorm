@@ -3,6 +3,7 @@ package com.sbumad.stormworm.sprite;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 
 import com.sbumad.stormworm.game.DataModel;
@@ -136,12 +137,19 @@ public class SpriteManager {
             if (p.getSpriteType().getId().startsWith("bot")){
                 if (p.getCity() == p.getDestCity()){
                     Collections.shuffle(roads);
+                    float cityX;
+                    float cityY;
                     for (Road r : roads){
                         if (r.s1 == p.getCity()){
                             movePlayerToCity(p, r.s2);
+                            cityX = r.s2.getX();
+                            cityY = r.s2.getY();
                         } else if (r.s2 == p.getCity()){
                             movePlayerToCity(p, r.s1);
+                            cityX = r.s1.getX();
+                            cityY = r.s1.getY();
                         }
+                        p.setCurrentRotation((float)Math.PI/2.0f);
                     }
                 }
             }
