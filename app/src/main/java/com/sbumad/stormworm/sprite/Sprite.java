@@ -49,7 +49,15 @@ public class Sprite {
         return DataModel.getDataModel().isOffBackground(this);
     }
     public void drawSelf(Canvas canvas){
+        if (getSpriteType().getId().startsWith("player")){
+            x -= getSpriteType().getWidth()/2.8;
+            y -= getSpriteType().getHeight()/1.7;
+        }
         canvas.drawBitmap(spriteType.getImage(), DataModel.getDataModel().getTransX() + x, DataModel.getDataModel().getTransY() + y, p);
+        if (getSpriteType().getId().startsWith("player")){
+            x += getSpriteType().getWidth()/2.8;
+            y += getSpriteType().getHeight()/1.7;
+        }
     }
     public void moveToPoint(float dx, float dy){
         float totalTime = 300;
