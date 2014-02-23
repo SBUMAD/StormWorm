@@ -99,6 +99,40 @@ public class MainActivity extends ActionBarActivity {
         Sprite sydney = spriteManager.addSprite("city", 88, 83, 0, 0);
         Sprite tehran = spriteManager.addSprite("city", 61, 45, 0, 0);
 
+        spriteManager.connectSprites(seattle, sanFrancisco);
+        spriteManager.connectSprites(seattle, newYork);
+        //spriteManager.connectSprites(sanFrancisco, beijing);
+        //spriteManager.connectSprites(sanFrancisco, shanghai);
+        spriteManager.connectSprites(sanFrancisco, mexicoCity);
+        spriteManager.connectSprites(sanFrancisco, newYork);
+        spriteManager.connectSprites(sanFrancisco, lima);
+        spriteManager.connectSprites(mexicoCity, lima);
+        spriteManager.connectSprites(mexicoCity, rio);
+        spriteManager.connectSprites(mexicoCity, newYork);
+        spriteManager.connectSprites(lima, rio);
+        spriteManager.connectSprites(rio, lisbon);
+        spriteManager.connectSprites(newYork, lisbon);
+        spriteManager.connectSprites(newYork, london); //North America is done
+        spriteManager.connectSprites(london, lisbon);
+        spriteManager.connectSprites(london, stPetersburg);
+        spriteManager.connectSprites(lisbon, cairo);
+        spriteManager.connectSprites(lisbon, stPetersburg);
+        spriteManager.connectSprites(timbuktu, cairo);
+        spriteManager.connectSprites(timbuktu, capeTown);
+        spriteManager.connectSprites(cairo, capeTown);
+        spriteManager.connectSprites(cairo, tehran); //Africa done
+        spriteManager.connectSprites(tehran, stPetersburg);
+        spriteManager.connectSprites(tehran, newDehli);
+        spriteManager.connectSprites(newDehli, beijing);
+        spriteManager.connectSprites(newDehli, shanghai);
+        spriteManager.connectSprites(shanghai, manila);
+        spriteManager.connectSprites(shanghai, beijing);
+        spriteManager.connectSprites(manila, jakarta);
+        spriteManager.connectSprites(manila, sydney);
+        spriteManager.connectSprites(jakarta, sydney);
+        spriteManager.connectSprites(jakarta, capeTown);
+        spriteManager.connectSprites(sydney, capeTown);
+
         Sprite player1 = spriteManager.initPlayer(BitmapFactory.decodeResource(getResources(), R.drawable.spritegreen), 10, 0);
 
     }
