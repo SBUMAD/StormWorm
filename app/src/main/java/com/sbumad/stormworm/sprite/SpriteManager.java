@@ -120,8 +120,16 @@ public class SpriteManager {
         for (Sprite s : sprites){
             if (s.getSpriteType().getId().equals("city")){
                 if (x >= s.getX() && x <= s.getX() + s.getSpriteType().getWidth() && y >= s.getY() && y <= s.getY() + s.getSpriteType().getHeight()){
-                    movePlayerToCity(players.get(0), s);
-                    players.get(0).setCity(s);
+                    boolean flag = false;
+                    for (Road r : roads){
+                        if ((r.s1 == players.get(0).getCity() && r.s2 == s) || (r.s1 == s && r.s2 == players.get(0).getCity())){
+                            flag = true;
+                        }
+                    }
+                    if (flag){
+                        movePlayerToCity(players.get(0), s);
+                        players.get(0).setCity(s);
+                    }
                 }
             }
         }
