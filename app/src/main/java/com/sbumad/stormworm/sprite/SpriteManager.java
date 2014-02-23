@@ -109,9 +109,6 @@ public class SpriteManager {
         toRemoveRoads.clear();
     }
     public void movePlayerToCity(Player p, Sprite city){
-        if (p.getCity() == city){
-            return;
-        }
         p.moveToPoint(city.getX(), city.getY());
     }
     public void movePlayerIfCity(float x, float y){
@@ -123,12 +120,21 @@ public class SpriteManager {
                     boolean flag = false;
                     for (Road r : roads){
                         if ((r.s1 == players.get(0).getCity() && r.s2 == s) || (r.s1 == s && r.s2 == players.get(0).getCity())){
+                            if (players.get(0).getCity() == players.get(0).getDestCity()){
+                                // Moving from point, ok to go
+                                flag = true;
+                            }else{
+                                
+                            }
+                        }
+                        // Already in motion, more checks necessary
+                        if (players.get(0).getCity() == s){
                             flag = true;
                         }
                     }
                     if (flag){
                         movePlayerToCity(players.get(0), s);
-                        players.get(0).setCity(s);
+                        players.get(0).setDestCity(s);
                     }
                 }
             }

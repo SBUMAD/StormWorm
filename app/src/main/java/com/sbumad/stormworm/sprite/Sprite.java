@@ -52,6 +52,10 @@ public class Sprite {
             float time = hypot / dv;
             if (time < timePassed/1000.0f){
                 time = timePassed;
+                if (this instanceof Player){
+                    ((Player)this).setCity(((Player)this).getDestCity());
+                }
+                movingToPoint = false;
             }
             vx = (dx - x)  / time;
             vy = (dy - y) / time;
