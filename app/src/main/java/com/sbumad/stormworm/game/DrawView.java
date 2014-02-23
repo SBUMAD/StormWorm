@@ -24,9 +24,11 @@ public class DrawView extends View {
     // for moving the map
     float lastX;
     float lastY;
+    long dragTime;
 
     public DrawView(Context context) {
         super(context);
+        dragTime = System.currentTimeMillis();
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
     }
 
@@ -60,11 +62,14 @@ public class DrawView extends View {
     public boolean onTouchEvent(MotionEvent ev) {
         // Let the ScaleGestureDetector inspect all events.
         mScaleDetector.onTouchEvent(ev);
+        if (ev.getPointerCount() > 1){
+            dragTime = System.currentTimeMillis() + 200;
+        }
         if (ev.getAction() == MotionEvent.ACTION_DOWN){
             lastX = ev.getX();
             lastY = ev.getY();
             MainActivity.getMain().getSpriteManager().movePlayerIfCity(ev.getX(), ev.getY());
-        } else if (ev.getAction() == MotionEvent.ACTION_MOVE && ev.getPointerCount() == 1){
+        } else if (ev.getAction() == MotionEvent.ACTION_MOVE && ev.getPointerCount() == 1 && System.currentTimeMillis() >= dragTime){
             float newX = ev.getX();
             float newY = ev.getY();
             DataModel.getDataModel().setTransX(DataModel.getDataModel().getTransX() + (newX - lastX));
