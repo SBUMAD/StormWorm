@@ -16,6 +16,10 @@ public class Sprite {
     private float vx;
     private float vy;
 
+    private boolean movingToPoint;
+    private float dx;
+    private float dy;
+
     private static Paint p = new Paint();
 
     public float getX(){return this.x;}
@@ -28,14 +32,31 @@ public class Sprite {
         this.y = DataModel.toAbsoluteHeight(y);
         this.vx = DataModel.toAbsoluteWidth(vx);
         this.vy = DataModel.toAbsoluteHeight(vy);
+        movingToPoint = false;
     }
     // this returns true if the sprite is off the game board
     public boolean update(){
+        if (movingToPoint == true && ((x <= dx && x+vx >= dx) || (x >= dx && x+vx <= dx))){
+            x = dx;
+            y = dy;
+            vx = 0;
+            vy = 0;
+            movingToPoint = false;
+        }
         x += vx;
         y += vy;
+
         return DataModel.getDataModel().isOffBackground(this);
     }
     public void drawSelf(Canvas canvas){
         canvas.drawBitmap(spriteType.getImage(), DataModel.getDataModel().getTransX() + x, DataModel.getDataModel().getTransY() + y, p);
+    }
+    public void moveToPoint(float dx, float dy){
+        float totalTime = 300;
+        vx = (dx - x) / totalTime;
+        vy = (dy - y) / totalTime;
+        this.dx = dx;
+        this.dy = dy;
+        movingToPoint = true;
     }
 }

@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.sbumad.stormworm.R;
+import com.sbumad.stormworm.sprite.Sprite;
 import com.sbumad.stormworm.sprite.SpriteManager;
 
 
@@ -77,14 +78,19 @@ public class MainActivity extends ActionBarActivity {
     }
     private void initSprites(){
         spriteManager.initSpriteType("city", BitmapFactory.decodeResource(getResources(), R.drawable.citysprite), 3, 0);
-        spriteManager.addSprite("city", 50, 50, 0, 0);
+        Sprite s1 = spriteManager.addSprite("city", 50, 50, 0, 0);
+        Sprite s2 = spriteManager.addSprite("city", 70, 70, 0, 0);
+        spriteManager.connectSprites(s1, s2);
+
+        Sprite player1 = spriteManager.initPlayer(BitmapFactory.decodeResource(getResources(), R.drawable.spritegreen), 10, 0);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 

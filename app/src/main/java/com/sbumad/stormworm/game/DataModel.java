@@ -18,6 +18,8 @@ public class DataModel {
     private float transX;
     private float transY;
 
+    private float scaleFactor;
+
     public Bitmap getBackground() {return background;}
     public void setBackground(Bitmap background) {this.background = background;}
     public static int getScreenWidth() {return screenWidth;}
@@ -28,6 +30,8 @@ public class DataModel {
     public float getTransY(){return this.transY;}
     public void setTransX(float transX){this.transX = transX;}
     public void setTransY(float transY){this.transY = transY;}
+    public void setScaleFactor(float scaleFactor){this.scaleFactor = scaleFactor;}
+    public float getScaleFactor(){return this.scaleFactor;}
 
     public static DataModel getDataModel(){
         if (dataModel == null){
@@ -69,5 +73,15 @@ public class DataModel {
             return true;
         }
         return false;
+    }
+    public float toUnscaledX(float x){
+        x /= scaleFactor;
+        x -= transX;
+        return x;
+    }
+    public float toUnscaledY(float y){
+        y /= scaleFactor;
+        y -= transY;
+        return y;
     }
 }

@@ -40,6 +40,8 @@ public class DrawView extends View {
     @Override
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
+        //Update the dataModel with the scale factor
+        DataModel.getDataModel().setScaleFactor(mScaleFactor);
         // Scale the picture
         canvas.save();
         canvas.scale(mScaleFactor, mScaleFactor);
@@ -61,7 +63,8 @@ public class DrawView extends View {
         if (ev.getAction() == MotionEvent.ACTION_DOWN){
             lastX = ev.getX();
             lastY = ev.getY();
-        } else if (ev.getAction() == MotionEvent.ACTION_MOVE){
+            MainActivity.getMain().getSpriteManager().movePlayerIfCity(ev.getX(), ev.getY());
+        } else if (ev.getAction() == MotionEvent.ACTION_MOVE && ev.getPointerCount() == 1){
             float newX = ev.getX();
             float newY = ev.getY();
             DataModel.getDataModel().setTransX(DataModel.getDataModel().getTransX() + (newX - lastX));
