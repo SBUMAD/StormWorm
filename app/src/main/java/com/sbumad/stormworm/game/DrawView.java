@@ -42,8 +42,7 @@ public class DrawView extends View {
     @Override
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
-        //Update the dataModel with the scale factor
-        DataModel.getDataModel().setScaleFactor(mScaleFactor);
+        mScaleFactor = DataModel.getDataModel().getScaleFactor();
         // Scale the picture
         canvas.save();
         canvas.scale(mScaleFactor, mScaleFactor);
@@ -74,6 +73,8 @@ public class DrawView extends View {
             float newY = ev.getY();
             DataModel.getDataModel().setTransX(DataModel.getDataModel().getTransX() + (newX - lastX));
             DataModel.getDataModel().setTransY(DataModel.getDataModel().getTransY() + (newY - lastY));
+            // make sure there is no white space
+            DataModel.getDataModel().examineBounds();
             lastX = newX;
             lastY = newY;
         }
@@ -87,7 +88,10 @@ public class DrawView extends View {
 
             // Don't let the object get too small or too large.
             mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f));
-
+            //Update the dataModel with the scale factor
+            DataModel.getDataModel().setScaleFactor(mScaleFactor);
+            // Make sure there is no white space
+            DataModel.getDataModel().examineBounds();
             invalidate();
             return true;
         }

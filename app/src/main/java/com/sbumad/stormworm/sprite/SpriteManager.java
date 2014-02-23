@@ -62,7 +62,7 @@ public class SpriteManager {
             sprites.remove(p);
             sprites.add(sprites.size() - 1, p);
         }
-        
+
         for (Sprite s : sprites){
             if (s.getSpriteType().getId() == "city"){
                 boolean flag = false;

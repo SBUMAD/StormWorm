@@ -42,6 +42,7 @@ public class DataModel {
     private DataModel(){
         transX = 0.0f;
         transY = 0.0f;
+        scaleFactor = 1.0f;
     }
 
     public static float toRelativeWidth(float x){
@@ -83,5 +84,22 @@ public class DataModel {
         y /= scaleFactor;
         y -= transY;
         return y;
+    }
+    public void examineBounds(){
+        if (scaleFactor < 1.0f){
+            scaleFactor = 1.0f;
+        }
+        if (transX > 0){
+            transX = 0;
+        }
+        if (transY > 0){
+            transY = 0;
+        }
+        if (scaleFactor > 1.0f && -1.0f * transX > screenWidth - (screenWidth / scaleFactor)){
+            transX = -1.0f * (screenWidth - (screenWidth / scaleFactor));
+        }
+        if (scaleFactor > 1.0f && -1.0f * transY > screenHeight - (screenHeight / scaleFactor)){
+            transY = -1.0f * (screenHeight - (screenHeight / scaleFactor));
+        }
     }
 }
