@@ -51,6 +51,18 @@ public class SpriteManager {
     public Player initPlayer(Bitmap image, boolean bot, float widthPercent, float heightPercent){
         Sprite city = null;
         Collections.shuffle(sprites);
+        // keep the players in the back of the list
+        ArrayList<Player> tempPs = new ArrayList<Player>();
+        for (Sprite s : sprites){
+            if (s instanceof  Player){
+                tempPs.add((Player)s);
+            }
+        }
+        for (Player p : tempPs){
+            sprites.remove(p);
+            sprites.add(sprites.size() - 1, p);
+        }
+        
         for (Sprite s : sprites){
             if (s.getSpriteType().getId() == "city"){
                 boolean flag = false;
