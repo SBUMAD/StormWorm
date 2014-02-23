@@ -48,7 +48,7 @@ public class SpriteManager {
     public void initSpriteType(String id, Bitmap image, float widthPercent, float heightPercent){
         spriteTypes.put(id, new SpriteType(id, image, widthPercent, heightPercent));
     }
-    public Player initPlayer(Bitmap image, float widthPercent, float heightPercent){
+    public Player initPlayer(Bitmap image, boolean bot, float widthPercent, float heightPercent){
         Sprite city = null;
         Collections.shuffle(sprites);
         for (Sprite s : sprites){
@@ -64,7 +64,12 @@ public class SpriteManager {
                 }
             }
         }
-        String id = String.format("player%d", players.size());
+        String id;
+        if (bot){
+            id = String.format("bot%d", players.size());
+        } else {
+            id = String.format("player%d", players.size());
+        }
         spriteTypes.put(id,new SpriteType(id, image, widthPercent, heightPercent));
         Player p = new Player(spriteTypes.get(id), DataModel.toRelativeWidth(city.getX()), DataModel.toRelativeHeight(city.getY()), 0, 0, city);
         sprites.add(p);
@@ -105,11 +110,27 @@ public class SpriteManager {
         for (Road r : toRemoveRoads){
             roads.remove(r);
         }
+        // update bots
+        for (Player p : players){
+            if (p.getSpriteType().getId().startsWith("bot")){
+                if (p.getCity() == p.getDestCity()){
+                    Collections.shuffle(roads);
+                    for (Road r : roads){
+                        if (r.s1 == p.getCity()){
+                            movePlayerToCity(p, r.s2);
+                        } else if (r.s2 == p.getCity()){
+                            movePlayerToCity(p, r.s1);
+                        }
+                    }
+                }
+            }
+        }
         toRemove.clear();
         toRemoveRoads.clear();
     }
     public void movePlayerToCity(Player p, Sprite city){
         p.moveToPoint(city.getX(), city.getY());
+        p.setDestCity(city);
     }
     public void movePlayerIfCity(float x, float y){
         x = DataModel.getDataModel().toUnscaledX(x);
@@ -124,7 +145,7 @@ public class SpriteManager {
                                 // Moving from point, ok to go
                                 flag = true;
                             }else{
-                                
+
                             }
                         }
                         // Already in motion, more checks necessary

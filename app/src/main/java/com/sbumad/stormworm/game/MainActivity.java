@@ -133,8 +133,8 @@ public class MainActivity extends ActionBarActivity {
         spriteManager.connectSprites(jakarta, capeTown);
         spriteManager.connectSprites(sydney, capeTown);
 
-        Sprite player1 = spriteManager.initPlayer(BitmapFactory.decodeResource(getResources(), R.drawable.spritegreen), 10, 0);
-
+        Sprite player1 = spriteManager.initPlayer(BitmapFactory.decodeResource(getResources(), R.drawable.spritegreen), false, 10, 0);
+        Sprite bot1 = spriteManager.initPlayer(BitmapFactory.decodeResource(getResources(),R.drawable.bug1), true, 10, 0);
     }
 
     @Override
