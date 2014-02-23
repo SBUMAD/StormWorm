@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,11 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.sbumad.stormworm.R;
+import com.sbumad.stormworm.gui.Menu;
 import com.sbumad.stormworm.sprite.Sprite;
 import com.sbumad.stormworm.sprite.SpriteManager;
 
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -31,6 +32,7 @@ public class MainActivity extends ActionBarActivity {
     private static int screenHeight;
     private GestureDetectorCompat gestureDetector;
     private float currentScale;
+    private DrawView screen;
 
     public SpriteManager getSpriteManager(){return spriteManager;}
     public static MainActivity getMain(){
@@ -39,6 +41,8 @@ public class MainActivity extends ActionBarActivity {
 
     public static int getScreenWidth(){return screenWidth;}
     public static int getScreenHeight(){return screenHeight;}
+    public DrawView getScreen(){return this.screen;}
+    public void setScreen(DrawView screen){this.screen = screen;}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,7 @@ public class MainActivity extends ActionBarActivity {
         DataModel.setScreenWidth(screenWidth);
         DataModel.setScreenHeight(screenHeight);
         // Make a new Screen
-        DrawView screen = new DrawView(this);
+        screen = new DrawView(this);
         // create the sprite manager
         spriteManager = new SpriteManager(BitmapFactory.decodeResource(getResources(), R.drawable.background),100, 100);
         // set the screen as the current display
@@ -134,11 +138,18 @@ public class MainActivity extends ActionBarActivity {
         spriteManager.connectSprites(sydney, capeTown);
 
         Sprite player1 = spriteManager.initPlayer(BitmapFactory.decodeResource(getResources(), R.drawable.spritegreen), false, 10, 0);
-        Sprite bot1 = spriteManager.initPlayer(BitmapFactory.decodeResource(getResources(),R.drawable.bug1), true, 10, 0);
+        Sprite bot1 = spriteManager.initPlayer(BitmapFactory.decodeResource(getResources(), R.drawable.bug1), true, 10, 0);
+
+        Menu menu = new Menu(screenWidth, screenHeight);
+        DataModel.getDataModel().setMenu(menu);
+        ArrayList<String> buttons = new ArrayList<String>();
+        buttons.add("Play");
+        buttons.add("Exit");
+        menu.turnOn(buttons);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
         //getMenuInflater().inflate(R.menu.main, menu);

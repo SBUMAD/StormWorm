@@ -53,32 +53,34 @@ public class DrawView extends View {
         // Restore scaling
         canvas.restore();
 
+        OnTouchListener otl = new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent ev) {
+                // Let the ScaleGestureDetector inspect all events.
+                mScaleDetector.onTouchEvent(ev);
+                if (ev.getPointerCount() > 1){
+                    dragTime = System.currentTimeMillis() + 200;
+                }
+                if (ev.getAction() == MotionEvent.ACTION_DOWN){
+                    lastX = ev.getX();
+                    lastY = ev.getY();
+                    MainActivity.getMain().getSpriteManager().movePlayerIfCity(ev.getX(), ev.getY());
+                } else if (ev.getAction() == MotionEvent.ACTION_MOVE && ev.getPointerCount() == 1 && System.currentTimeMillis() >= dragTime){
+                    float newX = ev.getX();
+                    float newY = ev.getY();
+                    DataModel.getDataModel().setTransX(DataModel.getDataModel().getTransX() + (newX - lastX));
+                    DataModel.getDataModel().setTransY(DataModel.getDataModel().getTransY() + (newY - lastY));
+                    // make sure there is no white space
+                    DataModel.getDataModel().examineBounds();
+                    lastX = newX;
+                    lastY = newY;
+                }
+                return true;
+            }
+        };
+        DataModel.getDataModel().setOnTouchListener(otl);
         // Paint it again!
         this.invalidate();
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        // Let the ScaleGestureDetector inspect all events.
-        mScaleDetector.onTouchEvent(ev);
-        if (ev.getPointerCount() > 1){
-            dragTime = System.currentTimeMillis() + 200;
-        }
-        if (ev.getAction() == MotionEvent.ACTION_DOWN){
-            lastX = ev.getX();
-            lastY = ev.getY();
-            MainActivity.getMain().getSpriteManager().movePlayerIfCity(ev.getX(), ev.getY());
-        } else if (ev.getAction() == MotionEvent.ACTION_MOVE && ev.getPointerCount() == 1 && System.currentTimeMillis() >= dragTime){
-            float newX = ev.getX();
-            float newY = ev.getY();
-            DataModel.getDataModel().setTransX(DataModel.getDataModel().getTransX() + (newX - lastX));
-            DataModel.getDataModel().setTransY(DataModel.getDataModel().getTransY() + (newY - lastY));
-            // make sure there is no white space
-            DataModel.getDataModel().examineBounds();
-            lastX = newX;
-            lastY = newY;
-        }
-        return true;
     }
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {

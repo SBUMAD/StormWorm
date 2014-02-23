@@ -24,6 +24,9 @@ public class SpriteManager {
     private Paint p;
     private ArrayList<Road> roads;
     private ArrayList<Road> toRemoveRoads;
+    private boolean menuOn;
+
+    public void setMenuOn(boolean menuOn){this.menuOn = menuOn;}
 
     // leave a dimension 0 to maintain aspect ratio on a galaxy s4
     public SpriteManager(Bitmap background, int widthPercent, int heightPercent){
@@ -34,6 +37,7 @@ public class SpriteManager {
         spriteTypes = new HashMap<String, SpriteType>();
         sprites = new ArrayList<Sprite>();
         toRemove = new ArrayList<Sprite>();
+        menuOn = true;
         if (widthPercent == 0){
             widthPercent = (int)(((float)background.getWidth() / (float)background.getHeight()) * (1080.0f / 1920.0f) * heightPercent + .5f);
         }
@@ -98,6 +102,11 @@ public class SpriteManager {
     }
     public void update(Canvas canvas){
         canvas.drawBitmap(background, DataModel.getDataModel().getTransX(), DataModel.getDataModel().getTransY(), p);
+
+        if (menuOn){
+            DataModel.getDataModel().getMenu().drawGUI(canvas);
+            return;
+        }
 
         for (Road r : roads){
             p.setColor(Color.YELLOW);
