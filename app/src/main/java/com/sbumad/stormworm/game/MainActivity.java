@@ -42,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DataModel.getDataModel();
         // remove title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -60,6 +61,8 @@ public class MainActivity extends ActionBarActivity {
             screenWidth = d.getWidth();
             screenHeight = d.getHeight();
         }
+        DataModel.setScreenWidth(screenWidth);
+        DataModel.setScreenHeight(screenHeight);
         // Make a new Screen
         DrawView screen = new DrawView(this);
         // create the sprite manager
@@ -73,7 +76,8 @@ public class MainActivity extends ActionBarActivity {
 
     }
     private void initSprites(){
-
+        spriteManager.initSpriteType("city", BitmapFactory.decodeResource(getResources(), R.drawable.citysprite), 3, 0);
+        spriteManager.addSprite("city", 50, 50, 0, 0);
     }
 
     @Override

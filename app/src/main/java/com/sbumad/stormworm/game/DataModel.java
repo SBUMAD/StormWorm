@@ -21,9 +21,9 @@ public class DataModel {
     public Bitmap getBackground() {return background;}
     public void setBackground(Bitmap background) {this.background = background;}
     public static int getScreenWidth() {return screenWidth;}
-    public static void setScreenWidth(int screenWidth) {screenWidth = screenWidth;}
+    public static void setScreenWidth(int screenWidth) {DataModel.screenWidth = screenWidth;}
     public static int getScreenHeight() {return screenHeight;}
-    public static void setScreenHeight(int screenHeight) {screenHeight = screenHeight;}
+    public static void setScreenHeight(int screenHeight) {DataModel.screenHeight = screenHeight;}
     public float getTransX(){return this.transX;}
     public float getTransY(){return this.transY;}
     public void setTransX(float transX){this.transX = transX;}
@@ -65,7 +65,7 @@ public class DataModel {
         return newB;
     }
     public boolean isOffBackground(Sprite s){
-        if (s.getX() > transX + background.getWidth() || s.getX() + s.getSpriteType().getWidth() < transX || s.getY() > transY + background.getHeight() || s.getY() + s.getSpriteType().getHeight() < transY){
+        if (s.getX() >  background.getWidth() || s.getX() + s.getSpriteType().getWidth() < 0|| s.getY() >  background.getHeight() || s.getY() + s.getSpriteType().getHeight() < 0){
             return true;
         }
         return false;

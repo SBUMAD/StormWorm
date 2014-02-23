@@ -22,11 +22,12 @@ public class Sprite {
     public float getY(){return this.y;}
     public SpriteType getSpriteType(){return this.spriteType;}
 
-    public Sprite(float x, float y, float vx, float vy){
-        this.x = x;
-        this.y = y;
-        this.vx = vx;
-        this.vy = vy;
+    public Sprite(SpriteType spriteType, float x, float y, float vx, float vy){
+        this.spriteType = spriteType;
+        this.x = DataModel.toAbsoluteWidth(x);
+        this.y = DataModel.toAbsoluteHeight(y);
+        this.vx = DataModel.toAbsoluteWidth(vx);
+        this.vy = DataModel.toAbsoluteHeight(vy);
     }
     // this returns true if the sprite is off the game board
     public boolean update(){

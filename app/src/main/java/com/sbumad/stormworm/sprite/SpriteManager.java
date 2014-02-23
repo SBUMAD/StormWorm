@@ -23,6 +23,9 @@ public class SpriteManager {
     // leave a dimension 0 to maintain aspect ratio on a galaxy s4
     public SpriteManager(Bitmap background, int widthPercent, int heightPercent){
         this.background = background;
+        DataModel.getDataModel().setBackground(background);
+        spriteTypes = new HashMap<String, SpriteType>();
+        sprites = new ArrayList<Sprite>();
         toRemove = new ArrayList<Sprite>();
         if (widthPercent == 0){
             widthPercent = (int)(((float)background.getWidth() / (float)background.getHeight()) * (1080.0f / 1920.0f) * heightPercent + .5f);
@@ -36,6 +39,11 @@ public class SpriteManager {
     // leave a dimension 0 to maintain aspect ratio on a galaxy s4
     public void initSpriteType(String id, Bitmap image, float widthPercent, float heightPercent){
         spriteTypes.put(id, new SpriteType(id, image, widthPercent, heightPercent));
+    }
+    public Sprite addSprite(String id, float x, float y, float vX, float vY){
+        Sprite s = new Sprite(spriteTypes.get(id), x, y, vX, vY);
+        sprites.add(s);
+        return s;
     }
     public void update(Canvas canvas){
         canvas.drawBitmap(background, DataModel.getDataModel().getTransX(), DataModel.getDataModel().getTransY(), p);
