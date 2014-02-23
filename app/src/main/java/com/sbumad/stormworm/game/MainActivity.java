@@ -78,13 +78,7 @@ public class MainActivity extends ActionBarActivity {
     }
     private void initSprites(){
         spriteManager.initSpriteType("city", BitmapFactory.decodeResource(getResources(), R.drawable.citysprite), 3, 0);
-<<<<<<< HEAD
-        Sprite s1 = spriteManager.addSprite("city", 50, 50, 0, 0);
-        Sprite s2 = spriteManager.addSprite("city", 70, 70, 0, 0);
-        spriteManager.connectSprites(s1, s2);
 
-        Sprite player1 = spriteManager.initPlayer(BitmapFactory.decodeResource(getResources(), R.drawable.spritegreen), 10, 0);
-=======
         Sprite newYork = spriteManager.addSprite("city", 25, 34, 0, 0);
         Sprite sanFrancisco = spriteManager.addSprite("city", 12, 40, 0, 0);
         Sprite mexicoCity = spriteManager.addSprite("city", 18, 48, 0, 0);
@@ -105,7 +99,7 @@ public class MainActivity extends ActionBarActivity {
         Sprite sydney = spriteManager.addSprite("city", 88, 83, 0, 0);
         Sprite tehran = spriteManager.addSprite("city", 61, 45, 0, 0);
 
->>>>>>> cb6dd892c92a7ab9b6f1fb1faf829397963ca1d0
+        Sprite player1 = spriteManager.initPlayer(BitmapFactory.decodeResource(getResources(), R.drawable.spritegreen), 10, 0);
 
     }
 

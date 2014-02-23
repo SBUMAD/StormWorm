@@ -28,12 +28,9 @@ public class SpriteManager {
     // leave a dimension 0 to maintain aspect ratio on a galaxy s4
     public SpriteManager(Bitmap background, int widthPercent, int heightPercent){
         this.background = background;
-<<<<<<< HEAD
         toRemoveRoads = new ArrayList<Road>();
         roads = new ArrayList<Road>();
         players = new ArrayList<Player>();
-=======
->>>>>>> cb6dd892c92a7ab9b6f1fb1faf829397963ca1d0
         spriteTypes = new HashMap<String, SpriteType>();
         sprites = new ArrayList<Sprite>();
         toRemove = new ArrayList<Sprite>();
