@@ -23,7 +23,6 @@ public class SpriteManager {
     // leave a dimension 0 to maintain aspect ratio on a galaxy s4
     public SpriteManager(Bitmap background, int widthPercent, int heightPercent){
         this.background = background;
-        DataModel.getDataModel().setBackground(background);
         spriteTypes = new HashMap<String, SpriteType>();
         sprites = new ArrayList<Sprite>();
         toRemove = new ArrayList<Sprite>();
@@ -34,6 +33,7 @@ public class SpriteManager {
             heightPercent = (int)(((float)background.getHeight() / (float)background.getWidth()) * (1920.0f / 1080.0f) * widthPercent + .5f);
         }
         this.background = Bitmap.createScaledBitmap(background, (int)((float)MainActivity.getScreenWidth() * ((float)widthPercent / 100.0f)), (int)((float)MainActivity.getScreenHeight() * ((float)heightPercent / 100.0f)), true);
+        DataModel.getDataModel().setBackground(this.background);
         p = new Paint();
     }
     // leave a dimension 0 to maintain aspect ratio on a galaxy s4

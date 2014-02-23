@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.sbumad.stormworm.R;
+import com.sbumad.stormworm.sprite.Sprite;
 import com.sbumad.stormworm.sprite.SpriteManager;
 
 
@@ -77,7 +78,27 @@ public class MainActivity extends ActionBarActivity {
     }
     private void initSprites(){
         spriteManager.initSpriteType("city", BitmapFactory.decodeResource(getResources(), R.drawable.citysprite), 3, 0);
-        spriteManager.addSprite("city", 50, 50, 0, 0);
+        Sprite newYork = spriteManager.addSprite("city", 25, 34, 0, 0);
+        Sprite sanFrancisco = spriteManager.addSprite("city", 12, 40, 0, 0);
+        Sprite mexicoCity = spriteManager.addSprite("city", 18, 48, 0, 0);
+        Sprite cairo = spriteManager.addSprite("city", 55, 44, 0, 0);
+        Sprite london = spriteManager.addSprite("city", 46, 28, 0, 0);
+        Sprite lisbon = spriteManager.addSprite("city", 44, 37, 0, 0);
+        Sprite manila = spriteManager.addSprite("city", 82, 50, 0, 0);
+        Sprite beijing = spriteManager.addSprite("city", 81, 35, 0, 0);
+        Sprite shanghai = spriteManager.addSprite("city", 81, 43, 0, 0);
+        Sprite capeTown = spriteManager.addSprite("city", 52, 81, 0, 0);
+        Sprite jakarta = spriteManager.addSprite("city", 78, 65, 0, 0);
+        Sprite newDehli = spriteManager.addSprite("city", 68, 45, 0, 0);
+        Sprite rio = spriteManager.addSprite("city", 33, 74, 0, 0);
+        Sprite timbuktu = spriteManager.addSprite("city", 47, 52, 0, 0);
+        Sprite stPetersburg = spriteManager.addSprite("city", 55, 27, 0, 0);
+        Sprite lima = spriteManager.addSprite("city", 25, 72, 0, 0);
+        Sprite seattle = spriteManager.addSprite("city", 13, 32, 0, 0);
+        Sprite sydney = spriteManager.addSprite("city", 88, 83, 0, 0);
+        Sprite tehran = spriteManager.addSprite("city", 61, 45, 0, 0);
+
+
     }
 
     @Override
