@@ -74,9 +74,14 @@ public class Sprite {
             y -= getSpriteType().getHeight()/1.7;
         }
         if (this instanceof Player && getSpriteType().getId().startsWith("bot")){
-            if (((Player)this).getCurrentRotation() != 0.0f){
+            float currentRotation = ((Player)this).getCurrentRotation();
+            if (currentRotation != 0.0f){
                 Matrix rotationMatrix = new Matrix();
-                rotationMatrix.postRotate((float)Math.PI/2.0f);
+
+                rotationMatrix.postTranslate(-1.0f * this.getSpriteType().getWidth() / 2, -1.0f * this.getSpriteType().getHeight() / 2);
+
+                rotationMatrix.postRotate((float)Math.toDegrees(currentRotation));
+                rotationMatrix.postTranslate(this.getSpriteType().getWidth() / 2, this.getSpriteType().getHeight() / 2);
                 rotationMatrix.postTranslate(DataModel.getDataModel().getTransX()+x, DataModel.getDataModel().getTransY() + y);
                 canvas.drawBitmap(spriteType.getImage(), rotationMatrix, p);
                 rotationMatrix.postTranslate(-1.0f * (DataModel.getDataModel().getTransX()+x), -1.0f * (DataModel.getDataModel().getTransY() + y));

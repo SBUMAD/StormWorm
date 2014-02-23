@@ -137,8 +137,8 @@ public class SpriteManager {
             if (p.getSpriteType().getId().startsWith("bot")){
                 if (p.getCity() == p.getDestCity()){
                     Collections.shuffle(roads);
-                    float cityX;
-                    float cityY;
+                    float cityX = 0.0f;
+                    float cityY = 0.0f;
                     for (Road r : roads){
                         if (r.s1 == p.getCity()){
                             movePlayerToCity(p, r.s2);
@@ -149,7 +149,26 @@ public class SpriteManager {
                             cityX = r.s1.getX();
                             cityY = r.s1.getY();
                         }
-                        p.setCurrentRotation((float)Math.PI/2.0f);
+                        p.setCurrentRotation(((float)Math.PI/2) + (float)Math.atan((p.getDestCity().getY() - p.getY()) / (p.getDestCity().getX() - p.getX())));
+                       float degrees = (float)Math.toDegrees(p.getCurrentRotation());
+                        if (degrees >= 0 && degrees < 90){
+
+                        }
+                        if (degrees >= 90 && degrees < 180){
+                            p.setCurrentRotation(p.getCurrentRotation() + (float)Math.PI);
+                        }
+                        if (degrees >= 180 && degrees < 270){
+                            p.setCurrentRotation(p.getCurrentRotation() + (float)Math.PI);
+                        }
+                        if (degrees >= 270 && degrees < 360){
+                            p.setCurrentRotation(p.getCurrentRotation() + (float)Math.PI);
+                        }
+                        if (cityY > p.getY()){
+                            p.setCurrentRotation(p.getCurrentRotation() + (float)Math.PI);
+                        }
+                       //p.setCurrentRotation((float)Math.atan((cityX - p.getX()) / (cityY - p.getY())));
+                       // p.setCurrentRotation((float)Math.atan2(p.getDestCity().getX() - p.getX(), p.getDestCity().getY() - p.getY()));
+                        //p.setCurrentRotation((float)((p.getDestCity().getX() * p.getX() + p.getDestCity().getY() * p.getY())/(Math.sqrt((p.getDestCity().getX() * p.getDestCity().getX()) +(p.getDestCity().getY() * p.getDestCity().getY())) * Math.sqrt((p.getX() * p.getX()) + (p.getY() * p.getY())))));
                     }
                 }
             }
